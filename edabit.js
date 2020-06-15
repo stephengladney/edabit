@@ -124,3 +124,88 @@ function stringFret(st, fr) {
   const standardTuning = [4, 11, 7, 2, 9, 4]
   return guitarFrets[standardTuning[st - 1] + fr]
 }
+
+function majorityVote(arr) {
+  const votes = {}
+  arr.forEach(vote => {
+    if (votes[vote]) votes[vote] = votes[vote] + 1
+    else votes[vote] = 1
+  })
+  for (let vote in votes) {
+    if (votes[vote] > Math.floor(arr.length / 2)) return vote
+  }
+  return null
+}
+
+function cuttingGrass(arr, ...cuts) {
+  return cuts.map(c => {
+    let areAnyDone = false
+
+    arr = arr.map(l => l - c)
+
+    arr.forEach(newLength => {
+      if (newLength <= 0) areAnyDone = true
+    })
+    return areAnyDone ? "Done" : arr
+  })
+}
+
+function sortContacts(names, sort) {
+  if (!names) return []
+  return names.sort((a, b) => {
+    const aLastName = a.split(" ")[1]
+    const bLastName = b.split(" ")[1]
+    if (sort === "DESC") return bLastName > aLastName ? 1 : -1
+    if (sort === "ASC") return bLastName > aLastName ? -1 : 1
+  })
+}
+
+class Pagination {
+  constructor(items = [], pageSize = 10) {
+    this.items = items
+    this.pageSize = parseInt(pageSize)
+    this.totalPages =
+      items.length === 0 ? 1 : Math.ceil(items.length / pageSize)
+    this.currentPage = 1
+    this.paginated = []
+
+    for (let i = 0; i < items.length; i = i + this.pageSize) {
+      this.paginated.push(this.items.slice(i, i + this.pageSize))
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) this.currentPage = this.currentPage - 1
+    return this
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage = this.currentPage + 1
+    }
+    return this
+  }
+
+  firstPage() {
+    this.currentPage = 1
+    return this
+  }
+
+  lastPage() {
+    this.currentPage = this.totalPages
+    return this
+  }
+
+  goToPage(page) {
+    page = parseInt(page)
+    if (page > 1 && page < this.totalPages) this.currentPage = page
+    else if (page <= 1) this.currentPage = 1
+    else if (page >= this.totalPages) this.currentPage = this.totalPages
+
+    return this
+  }
+
+  getVisibleItems() {
+    return this.paginated[this.currentPage - 1]
+  }
+}
