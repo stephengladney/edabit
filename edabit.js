@@ -209,3 +209,26 @@ class Pagination {
     return this.paginated[this.currentPage - 1]
   }
 }
+
+function apocalyptic(n) {
+  const index = String(BigInt(Math.pow(2, n))).search("666")
+  return index !== -1
+    ? `Repent! ${index} days until the Apocalypse!`
+    : "Crisis averted. Resume sinning."
+}
+
+function getTotalPrice(groceries) {
+  return (
+    groceries.reduce((acc, item) => {
+      return acc + item.quantity * (item.price * 100)
+    }, 0) / 100
+  )
+}
+
+function isGoalScored(goal) {
+  const isBallWithinPosts = index => {
+    const ball = String(...goal[index]).indexOf("0")
+    return ball >= 3 && ball <= 7
+  }
+  return isBallWithinPosts(0) || isBallWithinPosts(1) || isBallWithinPosts(2)
+}
