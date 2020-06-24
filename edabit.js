@@ -232,3 +232,45 @@ function isGoalScored(goal) {
   }
   return isBallWithinPosts(0) || isBallWithinPosts(1) || isBallWithinPosts(2)
 }
+
+function uniqueStyles(albums) {
+  const uniqueStyles = new Set([])
+  albums.forEach(album => {
+    album
+      .replace(/ /g, "")
+      .split(",")
+      .forEach(genre => uniqueStyles.add(genre))
+  })
+  return uniqueStyles.size
+}
+
+function firstRepeat(chars) {
+  const seenCharacters = {}
+  for (let i = 0; i < chars.length; i++) {
+    if (seenCharacters[chars[i]]) return chars[i]
+    else seenCharacters[chars[i]] = true
+  }
+  return "-1"
+}
+
+function filterArray(arr) {
+  return arr.filter(i => typeof i !== "string")
+}
+
+function charCount(myChar, str) {
+  return str.split("").filter(char => char === myChar).length
+}
+
+function repetition(txt, n = 1) {
+  return n === 1 ? txt : txt.concat(repetition(txt, n - 1))
+}
+
+function flattenArray(arr, levels = 1, currentLevel = 0) {
+  const result = []
+  arr.forEach(i => {
+    if (Array.isArray(i) && currentLevel < levels)
+      result.push(...flattenArray(i, levels, currentLevel + 1))
+    else result.push(i)
+  })
+  return result
+}
