@@ -274,3 +274,29 @@ function flattenArray(arr, levels = 1, currentLevel = 0) {
   })
   return result
 }
+
+function isFullHouse(hand) {
+  const uniqueCards = Array.from(new Set(hand).keys())
+  if (uniqueCards.length !== 2) return false
+
+  const card1 = uniqueCards[0]
+  const card2 = uniqueCards[1]
+
+  const card1count = hand.filter(card => card === card1).length
+  const card2count = hand.filter(card => card === card2).length
+
+  return (
+    (card1count === 3 && card2count === 2) ||
+    (card1count === 2 && card2count === 3)
+  )
+}
+
+function averageWordLength(str) {
+  const wordsArray = str.replace(/[^\w\s]/g, "").split(" ")
+  return Number(
+    Number(
+      wordsArray.reduce((totalLength, word) => totalLength + word.length, 0) /
+        wordsArray.length
+    ).toFixed(2)
+  )
+}
